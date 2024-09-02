@@ -19,10 +19,7 @@ jobs:
       - name: Authenticate with Power Platform
         run: |
            pac auth create  
-           --url ${{ secrets.POWERPLATFORM_SOURCE_URL }} \
-           --tenant ${{ secrets.POWERPLATFORM_TENANT_ID }} \
-           --client-id ${{ secrets.POWERPLATFORM_CLIENT_ID }} \ 
-           --client-secret ${{ secrets.POWERPLATFORM_CLIENT_SECRET }} |
+           --url ${{ secrets.POWERPLATFORM_SOURCE_URL }} --tenant ${{ secrets.POWERPLATFORM_TENANT_ID }} --client-id ${{ secrets.POWERPLATFORM_CLIENT_ID }} --client-secret ${{ secrets.POWERPLATFORM_CLIENT_SECRET }} |
 
       - name: Export Unmanaged Solution from Source Environment
         run: |
