@@ -1,0 +1,33 @@
+name: Deploy Unmanaged Solution
+
+on:
+  push:
+    branches:
+      - main  # Adjust the branch name as needed
+
+jobs:
+  deploy-solution:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Install Power Platform CLI
+        run: npm install -g pac
+
+      - name: Authenticate with Power Platform
+        run: |
+          pac auth create --url ${{ secrets.POWERPLATFORM_SOURCE_URL }} --tenant ${{ secrets.POWERPLATFORM_TENANT_ID }} --client-id ${{ secrets.POWERPLATFORM_CLIENT_ID }} --client-secret ${{ secrets.POWERPLATFORM_CLIENT_SECRET }}
+
+      - name: Export Unmanaged Solution from Source Environment
+        run: |
+          pac solution export --name "YourSolutionName" --path ./exported-solution --managed false
+
+      - name: Authenticate with Target Environment
+        run: |
+          pac auth create --url ${{ secrets.POWERPLATFORM_TARGET_URL }} --tenant ${{ secrets.POWERPLATFORM_TENANT_ID }} --client-id ${{ secrets.POWERPLATFORM_CLIENT_ID }} --client-secret ${{ secrets.POWERPLATFORM_CLIENT_SECRET }}
+
+      - name: Import Unmanaged Solution to Target Environment
+        run: |
+          pac solution import --path ./exported-solution/YourSolutionName.zip
