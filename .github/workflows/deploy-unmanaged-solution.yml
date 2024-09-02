@@ -22,7 +22,7 @@ jobs:
 
       - name: Export Unmanaged Solution from Source Environment
         run: |
-          pac solution export --name "YourSolutionName" --path ./exported-solution --managed false
+          pac solution export --name "Solution_1" --path ./exported-solution --managed false
 
       - name: Authenticate with Target Environment
         run: |
